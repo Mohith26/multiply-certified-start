@@ -294,7 +294,7 @@ function drawRight(req, a, slot) {
       <h3>${certified ? 'Certified slot' : 'Selected slot'}</h3>
       <div class="big">${fmtT(slot, true)}</div>
       <div class="l"><span>Wait after apheresis ready</span><b>${fmtDur(wait)}</b></div>
-      <div class="l"><span>Design estimate</span><b>${pct(sr.p, 2)} · ${sr.k}/${sr.n}</b></div>
+      <div class="l"><span>Design pass (${sr.n} runs)</span><b>${pct(sr.p, 2)} · ${sr.k} breached</b></div>
       ${certified ? `<div class="l"><span>Fresh certification runs</span><b>${certified.k}/${certified.n} breached</b></div>
       <div class="l"><span>Upper bound (${certified.manual ? '95%' : '95% overall'})</span><b>${pct(certified.ub, 2)} ≤ ${pct(pol.eps, pol.eps < 0.01 ? 1 : 0)}</b></div>
       <div class="note">${certified.manual ? 'Exact Clopper-Pearson bound on 2,000 fresh simulated runs.' : `Exact Clopper-Pearson bound on ${certified.n.toLocaleString()} fresh simulated runs, at δ = 0.05/${pol.maxAttempts} per attempt (Bonferroni over up to ${pol.maxAttempts} attempts; ${a.attempts.length} used).`} Runs resample this cluster's logged step durations.</div>`
@@ -305,7 +305,7 @@ function drawRight(req, a, slot) {
       <div class="row-btns"><button class="link" data-act="detail">Why this risk? →</button></div>
     </div>`;
   r.innerHTML = `${panelHead('Admission', `<button type="button" data-act="export" aria-label="Export results" title="Export (E)"><i data-lucide="download"></i></button>`)}
-    <div class="kv" style="line-height:1.6;margin-bottom:12px"><b style="font-weight:600;letter-spacing:.08em">${esc(req.id)}</b> · ${esc(req.coi)}<br><span class="sub">${esc(S.data.recipe.name)} · apheresis ready ${fmtT(req.ready, true)}</span></div>
+    <div class="kv" style="line-height:1.6;margin-bottom:12px"><b style="font-weight:600;letter-spacing:.08em">${esc(req.id)}</b> · ${esc(req.coi)}<br><span class="sub">${esc(S.data.recipe.name)}</span><br><span class="sub">Apheresis ready ${fmtT(req.ready, true)}</span></div>
     <table class="cmp" aria-label="Start-time options"><thead><tr><th>Rule</th><th>Start</th><th>Breach risk</th></tr></thead><tbody>${rowsCmp}${certRow}</tbody></table>
     ${slotCard}
     <button class="btn" data-act="commit" ${certified ? '' : 'aria-describedby="ovr"'}>${certified ? 'Commit start' : 'Commit with override'}</button>
@@ -493,8 +493,10 @@ document.addEventListener('click', (e) => {
   const b = e.target.closest('[data-b]'); if (b) { go({ tab: 'plan', view: 'main', b: b.dataset.b, slot: null }); return; }
 });
 document.addEventListener('keydown', (e) => {
-  if (e.target.closest('input,select,textarea') || $('#dlg').open) return;
-  if (e.key === 'Enter' && e.target.closest('li[data-b]')) { go({ tab: 'plan', view: 'main', b: e.target.closest('li[data-b]').dataset.b, slot: null }); return; }
+  const tg = e.target instanceof Element ? e.target : document.body;
+  if (tg.closest('input,select,textarea,button,a') && e.key === 'Enter') return;
+  if (tg.closest('input,select,textarea') || $('#dlg').open) return;
+  if (e.key === 'Enter' && tg.closest('li[data-b]')) { go({ tab: 'plan', view: 'main', b: tg.closest('li[data-b]').dataset.b, slot: null }); return; }
   const k = e.key;
   if (k === '?') return showKeys();
   if (k === 'o') return go({ tab: 'order', view: 'main' }); if (k === 'm') return go({ tab: 'mgmt', view: 'main' }); if (k === 'p') return go({ tab: 'plan', view: 'main' }); if (k === 'r') return go({ tab: 'run', view: 'main' });
