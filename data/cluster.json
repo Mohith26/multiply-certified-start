@@ -1,0 +1,367 @@
+{
+ "cluster": {
+  "name": "Cluster SF-02",
+  "site": "Multiply Labs · San Francisco, CA",
+  "arms": 4,
+  "modules": [
+   {
+    "id": "dyn1",
+    "type": "dyn",
+    "label": "CTS DynaCellect"
+   },
+   {
+    "id": "dyn2",
+    "type": "dyn",
+    "label": "CTS DynaCellect"
+   },
+   {
+    "id": "ncm1",
+    "type": "ncm",
+    "label": "NC-200 counter"
+   },
+   {
+    "id": "rot1",
+    "type": "rot",
+    "label": "CTS Rotea"
+   },
+   {
+    "id": "rot2",
+    "type": "rot",
+    "label": "CTS Rotea"
+   },
+   {
+    "id": "fim1",
+    "type": "fim",
+    "label": "Fill module"
+   },
+   {
+    "id": "crf1",
+    "type": "crf",
+    "label": "Controlled-rate freezer"
+   },
+   {
+    "id": "crf2",
+    "type": "crf",
+    "label": "Controlled-rate freezer"
+   },
+   {
+    "id": "icm1",
+    "type": "icm",
+    "label": "Heracell VIOS incubator (6 G-Rex)"
+   },
+   {
+    "id": "icm2",
+    "type": "icm",
+    "label": "Heracell VIOS incubator (6 G-Rex)"
+   },
+   {
+    "id": "icm3",
+    "type": "icm",
+    "label": "Heracell VIOS incubator (6 G-Rex)"
+   },
+   {
+    "id": "icm4",
+    "type": "icm",
+    "label": "Heracell VIOS incubator (6 G-Rex)"
+   },
+   {
+    "id": "icm5",
+    "type": "icm",
+    "label": "Heracell VIOS incubator (6 G-Rex)"
+   },
+   {
+    "id": "icm6",
+    "type": "icm",
+    "label": "Heracell VIOS incubator (6 G-Rex)"
+   },
+   {
+    "id": "icm7",
+    "type": "icm",
+    "label": "Heracell VIOS incubator (6 G-Rex)"
+   },
+   {
+    "id": "icm8",
+    "type": "icm",
+    "label": "Heracell VIOS incubator (6 G-Rex)"
+   },
+   {
+    "id": "icm9",
+    "type": "icm",
+    "label": "Heracell VIOS incubator (6 G-Rex)"
+   },
+   {
+    "id": "icm10",
+    "type": "icm",
+    "label": "Heracell VIOS incubator (6 G-Rex)"
+   },
+   {
+    "id": "icm11",
+    "type": "icm",
+    "label": "Heracell VIOS incubator (6 G-Rex)"
+   },
+   {
+    "id": "icm12",
+    "type": "icm",
+    "label": "Heracell VIOS incubator (6 G-Rex)"
+   },
+   {
+    "id": "icm13",
+    "type": "icm",
+    "label": "Heracell VIOS incubator (6 G-Rex)"
+   },
+   {
+    "id": "icm14",
+    "type": "icm",
+    "label": "Heracell VIOS incubator (6 G-Rex)"
+   },
+   {
+    "id": "icm15",
+    "type": "icm",
+    "label": "Heracell VIOS incubator (6 G-Rex)"
+   },
+   {
+    "id": "icm16",
+    "type": "icm",
+    "label": "Heracell VIOS incubator (6 G-Rex)"
+   }
+  ],
+  "icmSlotsPerModule": 6
+ },
+ "recipe": {
+  "name": "CD19 CAR-T · 7-day G-Rex · MBR v3.2",
+  "ops": [
+   {
+    "key": "resus",
+    "label": "Bag resuspension",
+    "arm": "h_resus",
+    "mod": null,
+    "run": null,
+    "anchor": 0,
+    "pred": null,
+    "con": null,
+    "tile": "Start"
+   },
+   {
+    "key": "iso",
+    "label": "Isolation",
+    "arm": "h_load",
+    "mod": "dyn",
+    "run": "r_dyn",
+    "anchor": null,
+    "pred": 0,
+    "con": {
+     "ref": 0,
+     "edge": "end",
+     "lag": 120,
+     "name": "Apheresis → isolation",
+     "hold": true
+    },
+    "tile": "Enrich"
+   },
+   {
+    "key": "cnt0",
+    "label": "Count",
+    "arm": "h_count",
+    "mod": "ncm",
+    "run": "r_count",
+    "anchor": null,
+    "pred": 1,
+    "con": {
+     "ref": 1,
+     "edge": "end",
+     "lag": 30,
+     "name": "Isolation → count",
+     "hold": true
+    },
+    "tile": "Enrich"
+   },
+   {
+    "key": "seed",
+    "label": "G-Rex seed + activate",
+    "arm": "h_seed",
+    "mod": null,
+    "run": null,
+    "anchor": null,
+    "pred": 2,
+    "con": {
+     "ref": 1,
+     "edge": "end",
+     "lag": 60,
+     "name": "Isolation → seeding",
+     "hold": true
+    },
+    "tile": "Expand"
+   },
+   {
+    "key": "trans",
+    "label": "Transduction",
+    "arm": "h_trans",
+    "mod": null,
+    "run": null,
+    "anchor": 1440,
+    "pred": 3,
+    "con": {
+     "ref": null,
+     "edge": "anchor",
+     "lag": 120,
+     "name": "Transduction window (24 h + 2 h)",
+     "hold": false
+    },
+    "tile": "Expand"
+   },
+   {
+    "key": "feed3",
+    "label": "Cytokine feed",
+    "arm": "h_feed",
+    "mod": null,
+    "run": null,
+    "anchor": 4320,
+    "pred": 3,
+    "con": {
+     "ref": null,
+     "edge": "anchor",
+     "lag": 240,
+     "name": "Feed window (day 3)",
+     "hold": false
+    },
+    "tile": "Expand"
+   },
+   {
+    "key": "cnt5",
+    "label": "Count",
+    "arm": "h_count",
+    "mod": "ncm",
+    "run": "r_count",
+    "anchor": 7200,
+    "pred": 3,
+    "con": {
+     "ref": null,
+     "edge": "anchor",
+     "lag": 240,
+     "name": "Count window (day 5)",
+     "hold": false
+    },
+    "tile": "Expand"
+   },
+   {
+    "key": "feed5",
+    "label": "Cytokine feed",
+    "arm": "h_feed",
+    "mod": null,
+    "run": null,
+    "anchor": null,
+    "pred": 6,
+    "con": {
+     "ref": 6,
+     "edge": "end",
+     "lag": 60,
+     "name": "Count → feed (day 5)",
+     "hold": false
+    },
+    "tile": "Expand"
+   },
+   {
+    "key": "harv",
+    "label": "G-Rex harvest",
+    "arm": "h_harvest",
+    "mod": null,
+    "run": null,
+    "anchor": 10080,
+    "pred": 3,
+    "con": {
+     "ref": null,
+     "edge": "anchor",
+     "lag": 240,
+     "name": "Harvest window (day 7)",
+     "hold": false
+    },
+    "tile": "Harvest"
+   },
+   {
+    "key": "wash",
+    "label": "Wash + concentrate",
+    "arm": "h_load",
+    "mod": "rot",
+    "run": "r_rotea",
+    "anchor": null,
+    "pred": 8,
+    "con": {
+     "ref": 8,
+     "edge": "end",
+     "lag": 45,
+     "name": "Harvest → wash",
+     "hold": true
+    },
+    "tile": "Harvest"
+   },
+   {
+    "key": "cnt7",
+    "label": "Count",
+    "arm": "h_count",
+    "mod": "ncm",
+    "run": "r_count",
+    "anchor": null,
+    "pred": 9,
+    "con": {
+     "ref": 9,
+     "edge": "end",
+     "lag": 30,
+     "name": "Wash → count",
+     "hold": true
+    },
+    "tile": "Harvest"
+   },
+   {
+    "key": "form",
+    "label": "Formulate (10% DMSO)",
+    "arm": "h_form",
+    "mod": null,
+    "run": null,
+    "anchor": null,
+    "pred": 10,
+    "con": {
+     "ref": 10,
+     "edge": "end",
+     "lag": 30,
+     "name": "Count → formulation",
+     "hold": true
+    },
+    "tile": "Formulate"
+   },
+   {
+    "key": "fill",
+    "label": "Fill final bags",
+    "arm": "h_load",
+    "mod": "fim",
+    "run": "r_fill",
+    "anchor": null,
+    "pred": 11,
+    "con": {
+     "ref": 11,
+     "edge": "end",
+     "lag": 15,
+     "name": "Formulation → fill",
+     "hold": true
+    },
+    "tile": "Formulate"
+   },
+   {
+    "key": "frz",
+    "label": "Load CRF",
+    "arm": "h_frz",
+    "mod": "crf",
+    "run": "r_crf",
+    "anchor": null,
+    "pred": 12,
+    "con": {
+     "ref": 11,
+     "edge": "start",
+     "lag": 60,
+     "name": "DMSO exposure before freeze",
+     "hold": true
+    },
+    "tile": "Freeze"
+   }
+  ]
+ }
+}

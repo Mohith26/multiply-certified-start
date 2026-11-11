@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RealQC · Planner · Certified Start</title>
+<meta name="description" content="Unofficial concept demo: chance-constrained job admission for a Multiply Labs robotic cluster.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script>window.__errs=[];addEventListener("error",e=>__errs.push(String(e.message)));addEventListener("unhandledrejection",e=>__errs.push(String(e.reason)));(function(){const o=console.error;console.error=function(){__errs.push([].join.call(arguments," "));o.apply(console,arguments)}})();</script>
+<link rel="icon" href="assets/mark.png">
+</head>
+<body>
+<header class="top" role="banner">
+  <a class="brand" href="#/plan" aria-label="Multiply Labs home"><img src="assets/logo.png" alt="MultiplyLabs" width="176" height="44"></a>
+  <nav class="tabs" aria-label="Primary">
+    <a href="#/order" data-tab="order">ORDER</a>
+    <a href="#/mgmt" data-tab="mgmt">MGMT</a>
+    <a href="#/plan" data-tab="plan">PLAN</a>
+    <a href="#/run" data-tab="run">RUN INFO</a>
+  </nav>
+  <div class="spacer"></div>
+  <div class="product">RealQC</div>
+  <div class="who"><span class="avatar" aria-hidden="true">SB</span><div><div class="who-n">Shift B Lead</div><div class="who-r">PROFILE</div></div></div>
+  <button class="logout" type="button" id="kbdBtn" title="Keyboard shortcuts (?)" aria-label="Keyboard shortcuts"><i data-lucide="keyboard"></i><span>KEYS</span></button>
+</header>
+
+<main id="app" aria-live="polite">
+  <div class="boot" id="boot"><div class="spin"></div><span>Loading plan…</span></div>
+</main>
+
+<footer class="foot">
+  <div class="powered">Powered by <img src="assets/logo.png" alt="MultiplyLabs" height="14"></div>
+  <div class="disc">Unofficial concept demo by Mohith Gajjela. Not affiliated with Multiply Labs. Synthetic data seeded from public figures (see README).</div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<dialog id="dlg" aria-labelledby="dlgTitle"></dialog>
+
+<script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+<script type="module" src="app.js"></script>
+</body>
+</html>
